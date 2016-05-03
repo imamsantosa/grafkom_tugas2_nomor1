@@ -18,7 +18,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 public class ESRender implements Renderer {
-
+	
 	private ESText glText;
 	private TextView textview;
 	private ObjectArena objectarena; // the primitive object to be drawn
@@ -45,6 +45,7 @@ public class ESRender implements Renderer {
 	private kubus_kecil kubus_kecil;
 	private kaki_meja kaki_meja;
 	private lampu lampu;
+	private Pesawat pesawat;
 
 	// Context context;
 	int Run_Mode = 0;
@@ -111,6 +112,8 @@ public class ESRender implements Renderer {
 	public ESRender(Context context) {
 		// super();
 		this.context = context;
+		
+		
 		this.objectarena = new ObjectArena();
 		this.objectball = new ObjectBall();
 		this.objectball2 = new ObjectBall();
@@ -121,10 +124,11 @@ public class ESRender implements Renderer {
 		this.mEarth3 = new MySphere(5, 3);
 		this.bolaBasket = new MySphere(5, 3);
 		this.transobject = new TransObject();
+		
 		kotak = new PhotoKubus(context); // (NEW)
 		// tembok_blkng = new PhotoKubus(context);
 		tembok = new TextureKubus(context);
-
+		pesawat = new Pesawat();
 		lukisan = new lukisan(context);//
 		lukisan1 = new lukisan(context);//
 
@@ -144,7 +148,7 @@ public class ESRender implements Renderer {
 		// gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glEnable(GL10.GL_NORMALIZE);
-
+		gl.glLoadIdentity();
 		// gl.glMaterialfv(GL10.GL_FRONT, GL10.GL_AMBIENT_AND_DIFFUSE,
 		// makeFloatBuffer(cyan));
 		
@@ -230,7 +234,6 @@ public class ESRender implements Renderer {
 //		gl.glEnable(GL10.GL_LIGHTING);
 		gl.glPopMatrix();
 		
-		
 		// lukisan2
 		gl.glPushMatrix();
 //		gl.glDisable(GL10.GL_LIGHTING);
@@ -243,7 +246,6 @@ public class ESRender implements Renderer {
 //		gl.glEnable(GL10.GL_LIGHTING);
 		gl.glPopMatrix();
 		
-		
 		// PINTU
 		gl.glPushMatrix();
 //		gl.glDisable(GL10.GL_LIGHTING);
@@ -254,6 +256,17 @@ public class ESRender implements Renderer {
 		// gl.glRotatef(CurrentAngle, 0.0f, 1.0f, 0.0f);
 		pintu.draw_pintu(gl);
 //		gl.glEnable(GL10.GL_LIGHTING);
+		gl.glPopMatrix();
+		
+		//pesawat
+		gl.glPushMatrix();
+//		gl.glTranslatef(0.0f, 0.0f, 0.0f);
+		gl.glTranslatef(1.0f, -0.35f, -3.0f);
+		gl.glScalef(0.05f, 0.05f, 0.05f); 
+////		GLU.gluLookAt(gl, 0.0f, 0.f, 2f, 0.0f, 0.0f, 0.f, 0.0f, 2f, 0.0f);
+		gl.glRotatef(CurrentAngle, 0.1f, 1.0f, -0.1f);
+		pesawat.draw_sayapPesawat(gl);
+		pesawat.draw_badanPesawat(gl);
 		gl.glPopMatrix();
 
 		// // buat meja
